@@ -9,6 +9,7 @@ import UIKit
 
 class NotesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    @IBOutlet weak var notesLabel: UILabel!
     @IBOutlet weak var notesTable: UITableView!
     
     var notes = Array<String>()
@@ -34,7 +35,14 @@ class NotesViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notes.count
+        let notesCount = notes.count
+        if notesCount > 0 {
+            notesLabel.isHidden = true
+        } else {
+            notesLabel.isHidden = false
+        }
+        
+        return notesCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -54,6 +62,14 @@ class NotesViewController: UIViewController, UITableViewDataSource, UITableViewD
             deleteNoteAt(index: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 10.0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
     }
     
 }
